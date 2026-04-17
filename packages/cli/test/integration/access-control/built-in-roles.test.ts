@@ -101,7 +101,7 @@ describe('Built-in Role Matrix Testing', () => {
 						id: 'uuid-1234',
 						parameters: {},
 						name: 'Start',
-						type: 'n8n-nodes-base.start',
+						type: 'n8n-nodes-base.manualTrigger',
 						typeVersion: 1,
 						position: [240, 300],
 					},
@@ -193,7 +193,7 @@ describe('Built-in Role Matrix Testing', () => {
 						id: 'uuid-1234',
 						parameters: {},
 						name: 'Start',
-						type: 'n8n-nodes-base.start',
+						type: 'n8n-nodes-base.manualTrigger',
 						typeVersion: 1,
 						position: [240, 300],
 					},
@@ -295,7 +295,7 @@ describe('Built-in Role Matrix Testing', () => {
 						id: 'uuid-1234',
 						parameters: {},
 						name: 'Start',
-						type: 'n8n-nodes-base.start',
+						type: 'n8n-nodes-base.manualTrigger',
 						typeVersion: 1,
 						position: [240, 300],
 					},
@@ -340,7 +340,7 @@ describe('Built-in Role Matrix Testing', () => {
 			await member3Agent
 				.post('/credentials')
 				.send({ ...randomCredentialPayload(), projectId: teamProjectA.id })
-				.expect(400);
+				.expect(403);
 
 			// Test credential update access (should be forbidden)
 			await member3Agent
@@ -364,7 +364,7 @@ describe('Built-in Role Matrix Testing', () => {
 						id: 'uuid-1234',
 						parameters: {},
 						name: 'Start',
-						type: 'n8n-nodes-base.start',
+						type: 'n8n-nodes-base.manualTrigger',
 						typeVersion: 1,
 						position: [240, 300],
 					},

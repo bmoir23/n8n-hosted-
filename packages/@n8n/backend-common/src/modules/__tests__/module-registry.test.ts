@@ -5,7 +5,6 @@ import { mock } from 'jest-mock-extended';
 import type { LicenseState } from '../../license-state';
 import { ModuleConfusionError } from '../errors/module-confusion.error';
 import { ModuleRegistry } from '../module-registry';
-import { MODULE_NAMES } from '../modules.config';
 
 beforeEach(() => {
 	jest.resetAllMocks();
@@ -14,11 +13,9 @@ beforeEach(() => {
 });
 
 describe('eligibleModules', () => {
-	it('should consider all default modules eligible', () => {
-		// 'chat-hub' isn't (yet) an eligible module by default
-		const NON_DEFAULT_MODULES = ['chat-hub'];
-		const expectedModules = MODULE_NAMES.filter((name) => !NON_DEFAULT_MODULES.includes(name));
-		expect(Container.get(ModuleRegistry).eligibleModules).toEqual(expectedModules);
+	it('should not include opt-in modules by default', () => {
+		const eligible = Container.get(ModuleRegistry).eligibleModules;
+		expect(eligible).not.toContain('instance-ai');
 	});
 
 	it('should consider a module ineligible if it was disabled via env var', () => {
@@ -30,12 +27,26 @@ describe('eligibleModules', () => {
 			'mcp',
 			'provisioning',
 			'breaking-changes',
+			'source-control',
 			'dynamic-credentials',
+			'chat-hub',
+			'sso-oidc',
+			'sso-saml',
+			'log-streaming',
+			'ldap',
+			'quick-connect',
+			'workflow-builder',
+			'favorites',
+			'redaction',
+			'instance-registry',
+			'otel',
+			'token-exchange',
+			'instance-version-history',
 		]);
 	});
 
 	it('should consider a module eligible if it was enabled via env var', () => {
-		process.env.N8N_ENABLED_MODULES = 'data-table';
+		process.env.N8N_ENABLED_MODULES = 'instance-ai';
 		expect(Container.get(ModuleRegistry).eligibleModules).toEqual([
 			'insights',
 			'external-secrets',
@@ -44,7 +55,22 @@ describe('eligibleModules', () => {
 			'mcp',
 			'provisioning',
 			'breaking-changes',
+			'source-control',
 			'dynamic-credentials',
+			'chat-hub',
+			'sso-oidc',
+			'sso-saml',
+			'log-streaming',
+			'ldap',
+			'quick-connect',
+			'workflow-builder',
+			'favorites',
+			'redaction',
+			'instance-registry',
+			'otel',
+			'token-exchange',
+			'instance-version-history',
+			'instance-ai',
 		]);
 	});
 

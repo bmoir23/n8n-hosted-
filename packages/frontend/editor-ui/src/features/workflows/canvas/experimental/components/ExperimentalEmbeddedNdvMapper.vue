@@ -2,7 +2,6 @@
 import InputPanel from '@/features/ndv/panel/components/InputPanel.vue';
 import type { INodeUi } from '@/Interface';
 import { useNDVStore } from '@/features/ndv/shared/ndv.store';
-import type { Workflow } from 'n8n-workflow';
 import { onBeforeUnmount, watch, computed, ref, useTemplateRef } from 'vue';
 import { useStyles } from '@/app/composables/useStyles';
 import {
@@ -14,7 +13,8 @@ import {
 import { useExperimentalNdvStore } from '../experimentalNdv.store';
 import { isEventTargetContainedBy } from '@/app/utils/htmlUtils';
 
-import { N8nPopoverReka } from '@n8n/design-system';
+import { N8nPopover } from '@n8n/design-system';
+import type { WorkflowObjectAccessors } from '@/app/types';
 type MapperState = { isOpen: true; closeOnMouseLeave: boolean } | { isOpen: false };
 
 const hoverOptions: UseElementHoverOptions = {
@@ -27,7 +27,7 @@ const {
 	reference,
 	visibleOnHover = false,
 } = defineProps<{
-	workflow: Workflow;
+	workflow: WorkflowObjectAccessors;
 	node: INodeUi;
 	inputNodeName: string;
 	visibleOnHover?: boolean;
@@ -98,7 +98,7 @@ onClickOutside(contentElRef, handleReferenceFocusOut);
 </script>
 
 <template>
-	<N8nPopoverReka
+	<N8nPopover
 		:open="state.isOpen"
 		side="left"
 		:side-flip="false"
@@ -130,7 +130,7 @@ onClickOutside(contentElRef, handleReferenceFocusOut);
 				search-shortcut="ctrl+f"
 			/>
 		</template>
-	</N8nPopoverReka>
+	</N8nPopover>
 </template>
 
 <style lang="scss" module>

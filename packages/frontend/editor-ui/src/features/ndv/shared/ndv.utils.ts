@@ -33,6 +33,11 @@ import type { Ref } from 'vue';
 import { omitKey } from '@/app/utils/objectUtils';
 import type { BaseTextKey } from '@n8n/i18n';
 
+export interface ParameterOptionsOverrides {
+	hideExpressionSelector?: boolean;
+	hideFocusPanelButton?: boolean;
+}
+
 export function getNodeSettingsInitialValues(): INodeParameters {
 	return {
 		color: '#ff0000',
@@ -444,13 +449,12 @@ export function shouldSkipParamValidation(
 }
 
 export function createCommonNodeSettings(
-	isExecutable: boolean,
-	isTriggerNode: boolean,
+	isToolOrModelNode: boolean,
 	t: (key: BaseTextKey) => string,
 ) {
 	const ret: INodeProperties[] = [];
 
-	if (isExecutable && !isTriggerNode) {
+	if (!isToolOrModelNode) {
 		ret.push(
 			{
 				displayName: t('nodeSettings.alwaysOutputData.displayName'),
